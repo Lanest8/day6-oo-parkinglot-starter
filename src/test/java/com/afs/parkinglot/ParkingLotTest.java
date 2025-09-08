@@ -3,6 +3,7 @@ package com.afs.parkinglot;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class ParkingLotTest {
     //case1 Given a parking lot,a car When the car, Then return a parking ticket
@@ -40,6 +41,14 @@ public class ParkingLotTest {
     }
 
     //case4 Given a parking lot,a car When the fetch with wrong ticket, Then return null
-    //case5 Given a parking lot,a car When the fetch with used ticket, Then return null
-    //case6 Given a parking lot,a car When the parking lot is no position, Then return null
+    @Test
+    public void should_return_null_when_fetch_a_cars_with_wrong_ticket() {
+        ParkingLot parkingLot = new ParkingLot(10);
+        Car car = new Car("1");
+        Ticket ticket = parkingLot.park(car);
+        Ticket wrongTicket = new Ticket(new Car("2"), 2, parkingLot);
+        Car carResult = parkingLot.fetch(wrongTicket);
+        assertNull(carResult);
+    }
+
 }
