@@ -150,9 +150,28 @@ public class ParkingLotTest {
         Ticket ticketResult = standardParkingBoy.park(car1);
         Ticket ticketResult2 = standardParkingBoy.park(car2);
         Ticket ticketResult3 = standardParkingBoy.park(car3);
-
         assertEquals(ticket, ticketResult);
         assertEquals(ticket2, ticketResult2);
         assertEquals(ticket3, ticketResult3);
+    }
+
+    //case11 Given two parking lot,three car When all parking lot is no position, Then print message "No available position."
+    @Test
+    public void should_print_message_when_all_parking_lots_full() {
+        ParkingLot parkingLot = new ParkingLot(1);
+        ParkingLot parkingLot2 = new ParkingLot(1);
+        StandardParkingBoy standardParkingBoy = new StandardParkingBoy();
+        Car car1 = new Car("1");
+        Car car2 = new Car("2");
+        Car car3 = new Car("3");
+
+        standardParkingBoy.addParkingLot(parkingLot);
+        standardParkingBoy.addParkingLot(parkingLot2);
+        standardParkingBoy.park(car1);
+        standardParkingBoy.park(car2);
+        Ticket ticket = standardParkingBoy.park(car3);
+
+        assertNull(ticket);
+        assertTrue(outputStream.toString().contains("No available position."));
     }
 }

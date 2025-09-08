@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 public class StandardParkingBoy {
-    private Set<ParkingLot> parkingLots = new HashSet<>();
+    private List<ParkingLot> parkingLots = new ArrayList<>();
 
     public StandardParkingBoy() {
     }
