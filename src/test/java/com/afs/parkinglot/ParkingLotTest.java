@@ -174,4 +174,26 @@ public class ParkingLotTest {
         assertNull(ticket);
         assertTrue(outputStream.toString().contains("No available position."));
     }
+
+    //case12 Given a parking lot,three car When fetch multiple car, Then return null
+    @Test
+    public void should_return_null_when_fetch_multiple_car() {
+        ParkingLot parkingLot = new ParkingLot(3);
+        StandardParkingBoy standardParkingBoy = new StandardParkingBoy();
+        Car car1 = new Car("1");
+        Car car2 = new Car("2");
+        Car car3 = new Car("3");
+
+        standardParkingBoy.addParkingLot(parkingLot);
+        Ticket ticket1 = standardParkingBoy.park(car1);
+        Ticket ticket2 = standardParkingBoy.park(car2);
+        Ticket ticket3 = standardParkingBoy.park(car3);
+        Car carResult1 = standardParkingBoy.fetch(ticket1);
+        Car carResult2 = standardParkingBoy.fetch(ticket2);
+        Car carResult3 = standardParkingBoy.fetch(ticket3);
+
+        assertEquals(car1, carResult1);
+        assertEquals(car2, carResult2);
+        assertEquals(car3, carResult3);
+    }
 }
