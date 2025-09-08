@@ -25,7 +25,10 @@ public class ParkingLot {
                     ticketCars.put(ticket, car);
                     return ticket;
                 })
-                .orElse(null);
+                .orElseGet(() -> {
+                    System.out.println("No available position.");
+                    return null;
+                });
     }
 
     public Car fetch(Ticket ticket) {

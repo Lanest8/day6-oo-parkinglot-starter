@@ -104,4 +104,13 @@ public class ParkingLotTest {
     }
 
     //case9 Given a parking lot,a car When the parking lot is no position, Then print message No available position.
+    @Test
+    public void should_print_message_when_parking_lot_no_position() {
+        ParkingLot parkingLot = new ParkingLot(1);
+        Car car1 = new Car("1");
+        Car car2 = new Car("2");
+        parkingLot.park(car1);
+        parkingLot.park(car2);
+        assertTrue(outputStream.toString().contains("No available position."));
+    }
 }
