@@ -1,6 +1,7 @@
 package com.afs.parkinglot;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class StandardParkingBoy {
@@ -10,21 +11,23 @@ public class StandardParkingBoy {
     }
 
     public Ticket park(Car car) {
-        Optional<ParkingLot> availableLot = parkingLots.stream()
+        return parkingLots.stream()
                 .filter(lot -> !lot.isFull())
-                .findFirst();
-        if (availableLot.isEmpty()) {
-            System.out.println("No available position.");
-            return null;
-        }
-        ParkingLot parkingLot = availableLot.get();
-        return IntStream.rangeClosed(1, parkingLot.getCapacity()).boxed()
-                .filter(position -> parkingLot.getTicketCars().keySet().stream().noneMatch(ticket -> ticket.getPosition().equals(position)))
                 .findFirst()
-                .map(position -> {
-                    Ticket ticket = new Ticket(car, position, parkingLot);
-                    parkingLot.getTicketCars().put(ticket, car);
-                    return ticket;
+                .flatMap(parkingLot -> {
+                    Set<Integer> occupiedPositions = parkingLot.getTicketCars().keySet().stream()
+                            .map(Ticket::getPosition)
+                            .collect(Collectors.toCollection(() -> new HashSet<>(parkingLot.getCapacity())));
+
+                    return IntStream.rangeClosed(1, parkingLot.getCapacity())
+                            .filter(position -> !occupiedPositions.contains(position))
+                            .boxed()
+                            .findFirst()
+                            .map(position -> {
+                                Ticket ticket = new Ticket(car, position, parkingLot);
+                                parkingLot.getTicketCars().put(ticket, car);
+                                return ticket;
+                            });
                 })
                 .orElseGet(() -> {
                     System.out.println("No available position.");
