@@ -30,4 +30,8 @@ public class ParkingLot {
     public void setCapacity(Integer capacity) {
         this.capacity = capacity;
     }
+
+    public boolean isFull() {
+        return ticketCars.size() >= capacity;
+    }
 }
