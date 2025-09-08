@@ -61,4 +61,14 @@ public class ParkingLotTest {
         assertNull(carResult2);
     }
 
+    //case6 Given a parking lot,a car When the parking lot is no position, Then return null
+    @Test
+    public void should_return_null_when_parking_lot_no_position() {
+        ParkingLot parkingLot = new ParkingLot(1);
+        Car car1 = new Car("1");
+        Car car2 = new Car("2");
+        parkingLot.park(car1);
+        Ticket ticket = parkingLot.park(car2);
+        assertNull(ticket);
+    }
 }
