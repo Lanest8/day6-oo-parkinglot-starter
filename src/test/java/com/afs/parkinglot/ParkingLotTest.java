@@ -21,9 +21,10 @@ public class ParkingLotTest {
     @Test
     public void should_return_ticket_when_parking_a_car() {
         ParkingLot parkingLot = new ParkingLot();
+        StandardParkingBoy standardParkingBoy = new StandardParkingBoy(parkingLot);
         Car car = new Car("park number 1");
         Ticket ticket = new Ticket(car, 1, parkingLot);
-        Ticket ticketResult = parkingLot.park(car);
+        Ticket ticketResult = standardParkingBoy.park(car);
         assertEquals(ticket, ticketResult);
     }
 
@@ -31,9 +32,10 @@ public class ParkingLotTest {
     @Test
     public void should_return_car_when_fetch_a_car() {
         ParkingLot parkingLot = new ParkingLot();
+        StandardParkingBoy standardParkingBoy = new StandardParkingBoy(parkingLot);
         Car car = new Car("1");
-        Ticket ticketResult = parkingLot.park(car);
-        Car carResult = parkingLot.fetch(ticketResult);
+        Ticket ticketResult = standardParkingBoy.park(car);
+        Car carResult = standardParkingBoy.fetch(ticketResult);
         assertEquals(car, carResult);
     }
 
@@ -41,12 +43,13 @@ public class ParkingLotTest {
     @Test
     public void should_return_correct_car_when_fetch_two_cars() {
         ParkingLot parkingLot = new ParkingLot();
+        StandardParkingBoy standardParkingBoy = new StandardParkingBoy(parkingLot);
         Car car1 = new Car("1");
         Car car2 = new Car("2");
-        Ticket ticket1 = parkingLot.park(car1);
-        Ticket ticket2 = parkingLot.park(car2);
-        Car carResult1 = parkingLot.fetch(ticket1);
-        Car carResult2 = parkingLot.fetch(ticket2);
+        Ticket ticket1 = standardParkingBoy.park(car1);
+        Ticket ticket2 = standardParkingBoy.park(car2);
+        Car carResult1 = standardParkingBoy.fetch(ticket1);
+        Car carResult2 = standardParkingBoy.fetch(ticket2);
         assertEquals(car1, carResult1);
         assertEquals(car2, carResult2);
     }
@@ -55,8 +58,9 @@ public class ParkingLotTest {
     @Test
     public void should_return_null_when_fetch_a_cars_with_wrong_ticket() {
         ParkingLot parkingLot = new ParkingLot();
+        StandardParkingBoy standardParkingBoy = new StandardParkingBoy(parkingLot);
         Ticket wrongTicket = new Ticket(new Car("2"), 2, parkingLot);
-        Car carResult = parkingLot.fetch(wrongTicket);
+        Car carResult = standardParkingBoy.fetch(wrongTicket);
         assertNull(carResult);
     }
 
@@ -64,10 +68,11 @@ public class ParkingLotTest {
     @Test
     public void should_return_null_when_fetch_a_cars_with_used_ticket() {
         ParkingLot parkingLot = new ParkingLot();
+        StandardParkingBoy standardParkingBoy = new StandardParkingBoy(parkingLot);
         Car car = new Car("1");
-        Ticket ticket = parkingLot.park(car);
-        Car carResult1 = parkingLot.fetch(ticket);
-        Car carResult2 = parkingLot.fetch(ticket);
+        Ticket ticket = standardParkingBoy.park(car);
+        Car carResult1 = standardParkingBoy.fetch(ticket);
+        Car carResult2 = standardParkingBoy.fetch(ticket);
         assertEquals(car, carResult1);
         assertNull(carResult2);
     }
@@ -76,10 +81,11 @@ public class ParkingLotTest {
     @Test
     public void should_return_null_when_parking_lot_no_position() {
         ParkingLot parkingLot = new ParkingLot(1);
+        StandardParkingBoy standardParkingBoy = new StandardParkingBoy(parkingLot);
         Car car1 = new Car("1");
         Car car2 = new Car("2");
-        parkingLot.park(car1);
-        Ticket ticket = parkingLot.park(car2);
+        standardParkingBoy.park(car1);
+        Ticket ticket = standardParkingBoy.park(car2);
         assertNull(ticket);
     }
 
@@ -87,8 +93,9 @@ public class ParkingLotTest {
     @Test
     public void should_print_message_when_fetch_a_cars_with_wrong_ticket() {
         ParkingLot parkingLot = new ParkingLot();
+        StandardParkingBoy standardParkingBoy = new StandardParkingBoy(parkingLot);
         Ticket wrongTicket = new Ticket(new Car("2"), 2, parkingLot);
-        parkingLot.fetch(wrongTicket);
+        standardParkingBoy.fetch(wrongTicket);
         assertTrue(outputStream.toString().contains("Unrecognized parking ticket."));
     }
 
@@ -96,10 +103,11 @@ public class ParkingLotTest {
     @Test
     public void should_print_message_when_fetch_a_cars_with_used_ticket() {
         ParkingLot parkingLot = new ParkingLot();
+        StandardParkingBoy standardParkingBoy = new StandardParkingBoy(parkingLot);
         Car car = new Car("1");
-        Ticket ticket = parkingLot.park(car);
-        parkingLot.fetch(ticket);
-        parkingLot.fetch(ticket);
+        Ticket ticket = standardParkingBoy.park(car);
+        standardParkingBoy.fetch(ticket);
+        standardParkingBoy.fetch(ticket);
         assertTrue(outputStream.toString().contains("Unrecognized parking ticket."));
     }
 
@@ -107,10 +115,11 @@ public class ParkingLotTest {
     @Test
     public void should_print_message_when_parking_lot_no_position() {
         ParkingLot parkingLot = new ParkingLot(1);
+        StandardParkingBoy standardParkingBoy = new StandardParkingBoy(parkingLot);
         Car car1 = new Car("1");
         Car car2 = new Car("2");
-        parkingLot.park(car1);
-        parkingLot.park(car2);
+        standardParkingBoy.park(car1);
+        standardParkingBoy.park(car2);
         assertTrue(outputStream.toString().contains("No available position."));
     }
 }

@@ -1,7 +1,6 @@
 package com.afs.parkinglot;
 
 import java.util.*;
-import java.util.stream.IntStream;
 
 public class ParkingLot {
     private Integer capacity;
@@ -16,25 +15,19 @@ public class ParkingLot {
         this.capacity = capacity;
     }
 
-    public Ticket park(Car car) {
-        return IntStream.rangeClosed(1, capacity).boxed()
-                .filter(position -> ticketCars.keySet().stream().noneMatch(ticket -> ticket.getPosition().equals(position)))
-                .findFirst()
-                .map(position -> {
-                    Ticket ticket = new Ticket(car, position, this);
-                    ticketCars.put(ticket, car);
-                    return ticket;
-                })
-                .orElseGet(() -> {
-                    System.out.println("No available position.");
-                    return null;
-                });
+    public Map<Ticket, Car> getTicketCars() {
+        return ticketCars;
     }
 
-    public Car fetch(Ticket ticket) {
-        if (ticket == null || !ticketCars.containsKey(ticket)) {
-            System.out.println("Unrecognized parking ticket.");
-        }
-        return ticketCars.remove(ticket);
+    public void setTicketCars(Map<Ticket, Car> ticketCars) {
+        this.ticketCars = ticketCars;
+    }
+
+    public Integer getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
     }
 }
