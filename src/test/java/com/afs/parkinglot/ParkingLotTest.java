@@ -15,5 +15,14 @@ public class ParkingLotTest {
         assertEquals(ticket, ticketResult);
     }
 
+    //case2 Given a parking lot,a car,a parking ticket When the fetch, Then return car
+    @Test
+    public void should_return_car_when_fetch_a_car() {
+        ParkingLot parkingLot = new ParkingLot(10);
+        Car car = new Car("1");
+        Ticket ticketResult = parkingLot.park(car);
+        Car carResult = parkingLot.fetch(ticketResult);
+        assertEquals(car, carResult);
+    }
 
 }
