@@ -7,11 +7,6 @@ public class Ticket {
     private Integer position;
     private Car car;
 
-    public Ticket(ParkingLot parkingLot, Car car) {
-        this.parkingLot = parkingLot;
-        this.car = car;
-    }
-
     public Ticket(Car car, Integer position, ParkingLot parkingLot) {
         this.car = car;
         this.position = position;
