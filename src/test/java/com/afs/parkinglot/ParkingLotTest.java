@@ -93,6 +93,15 @@ public class ParkingLotTest {
     }
 
     //case8 Given a parking lot,a car When the fetch with used ticket, Then print message "Unrecognized parking ticket".
+    @Test
+    public void should_print_message_when_fetch_a_cars_with_used_ticket() {
+        ParkingLot parkingLot = new ParkingLot();
+        Car car = new Car("1");
+        Ticket ticket = parkingLot.park(car);
+        parkingLot.fetch(ticket);
+        parkingLot.fetch(ticket);
+        assertTrue(outputStream.toString().contains("Unrecognized parking ticket."));
+    }
 
     //case9 Given a parking lot,a car When the parking lot is no position, Then print message No available position.
 }
