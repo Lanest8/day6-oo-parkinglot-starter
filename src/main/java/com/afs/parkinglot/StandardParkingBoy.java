@@ -1,8 +1,6 @@
 package com.afs.parkinglot;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class StandardParkingBoy {
     private List<ParkingLot> parkingLots = new ArrayList<>();
@@ -14,26 +12,10 @@ public class StandardParkingBoy {
         return parkingLots.stream()
                 .filter(lot -> !lot.isFull())
                 .findFirst()
-                .flatMap(parkingLot -> generateTicket(car, parkingLot))
+                .map(lot -> lot.park(car))
                 .orElseGet(() -> {
                     System.out.println("No available position.");
                     return null;
-                });
-    }
-
-    private static Optional<Ticket> generateTicket(Car car, ParkingLot parkingLot) {
-        Set<Integer> occupiedPositions = parkingLot.getTicketCars().keySet().stream()
-                .map(Ticket::getPosition)
-                .collect(Collectors.toCollection(() -> new HashSet<>(parkingLot.getCapacity())));
-
-        return IntStream.rangeClosed(1, parkingLot.getCapacity())
-                .filter(position -> !occupiedPositions.contains(position))
-                .boxed()
-                .findFirst()
-                .map(position -> {
-                    Ticket ticket = new Ticket(car, position, parkingLot);
-                    parkingLot.getTicketCars().put(ticket, car);
-                    return ticket;
                 });
     }
 
