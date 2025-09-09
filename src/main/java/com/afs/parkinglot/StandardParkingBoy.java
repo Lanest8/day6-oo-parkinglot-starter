@@ -20,17 +20,12 @@ public class StandardParkingBoy {
     }
 
     public Car fetch(Ticket ticket) {
-        if (parkingLots.contains(ticket.getParkingLot())) {
-            parkingLots.stream()
-                    .filter(lot -> lot.equals(ticket.getParkingLot()))
-                    .findFirst()
-                    .ifPresent(parkingLot -> {
-                        if (!parkingLot.getTicketCars().containsKey(ticket)) {
-                            System.out.println("Unrecognized parking ticket.");
-                        }
-                    });
+        ParkingLot parkingLot = ticket.getParkingLot();
+        if (!parkingLots.contains(parkingLot)) {
+            System.out.println("Unrecognized parking ticket.");
+            return null;
         }
-        return ticket.getParkingLot().getTicketCars().remove(ticket);
+        return parkingLot.fetch(ticket);
     }
 
     public void addParkingLot(ParkingLot parkingLot) {
